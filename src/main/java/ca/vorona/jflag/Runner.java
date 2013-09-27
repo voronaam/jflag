@@ -33,14 +33,14 @@ public class Runner {
         symtab = (ElfSymbolTable) elfReader.section(".symtab");
         
         // Now it is time to do some fun!
-        setBooleanFlag("AlwaysActAsServerClassMachine", true);
-        setBooleanFlag("NeverActAsServerClassMachine", true);
-        setBooleanFlag("TraceClassLoading", true);
-        setBooleanFlag("PrintTLAB", true);
-        setBooleanFlag("UseLargePages", true);
-        setBooleanFlag("TraceGCTaskThread", true);
-        setBooleanFlag("TraceSuperWord", true);
-//        setBooleanFlag("StackTraceInThrowable", false);
+//        setBooleanFlag("AlwaysActAsServerClassMachine", true);
+//        setBooleanFlag("NeverActAsServerClassMachine", true);
+//        setBooleanFlag("TraceClassLoading", true);
+//        setBooleanFlag("PrintTLAB", true);
+//        setBooleanFlag("UseLargePages", true);
+//        setBooleanFlag("TraceGCTaskThread", true);
+//        setBooleanFlag("TraceSuperWord", true);
+        setBooleanFlag("StackTraceInThrowable", false);
 
         if(args.length > 0) {
             findSymbols(args[0]);
@@ -105,8 +105,8 @@ public class Runner {
         while (matcher.find()) {
             matcher.group(1);
         }
-        int[] a = new int[12000000];
-        int[] b = new int[12000000];
+        int[] a = new int[1200000000];
+        int[] b = new int[1200000000];
         for(int i=0;i<a.length;i+=1000) {
             a[i] = b[i];
         }
