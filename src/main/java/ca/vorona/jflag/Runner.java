@@ -36,7 +36,15 @@ public class Runner {
         setBooleanFlag("AlwaysActAsServerClassMachine", true);
         setBooleanFlag("NeverActAsServerClassMachine", true);
         setBooleanFlag("TraceClassLoading", true);
-        findSymbols("");
+        setBooleanFlag("PrintTLAB", true);
+        setBooleanFlag("UseLargePages", true);
+        setBooleanFlag("TraceGCTaskThread", true);
+        setBooleanFlag("TraceSuperWord", true);
+//        setBooleanFlag("StackTraceInThrowable", false);
+
+        if(args.length > 0) {
+            findSymbols(args[0]);
+        }
         
         // Now let's do something so JVM get's to do funny things
         load();
@@ -96,6 +104,11 @@ public class Runner {
         Matcher matcher = pattern.matcher("345434234-fdgfdgsdas");
         while (matcher.find()) {
             matcher.group(1);
+        }
+        int[] a = new int[12000000];
+        int[] b = new int[12000000];
+        for(int i=0;i<a.length;i+=1000) {
+            a[i] = b[i];
         }
     }
 }
