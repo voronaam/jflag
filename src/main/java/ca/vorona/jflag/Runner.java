@@ -19,12 +19,21 @@ public class Runner {
         System.out.println("Starting the magic");
         unsafe = getUnsafe();
         String jvmLibraryString = findJvmMaps();
-        String[] parts = jvmLibraryString.split("\\w");
+        System.out.println("JVM library string " + jvmLibraryString);
+        String[] parts = jvmLibraryString.split("\\s");
         String jvmLibrary = parts[parts.length - 1];
+        System.out.println("JVM library " + jvmLibrary);
+        String baseAddressString = "0x" + parts[0];
+        System.out.println("Base Address " + baseAddressString);
+        baseAddress = Long.decode(baseAddressString.split("-")[0]);
         
         ElfReader elfReader = new ElfReader(jvmLibrary);
         symtab = (ElfSymbolTable) elfReader.section(".symtab");
+        
+        // Now it is time to do some fun!
         setBooleanFlag("PrintOopAddress", true);
+        
+        
         System.out.println("Reached the end");
     }
     
