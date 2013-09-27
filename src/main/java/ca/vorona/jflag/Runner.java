@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import one.elf.*;
 import sun.misc.Unsafe;
@@ -31,8 +33,13 @@ public class Runner {
         symtab = (ElfSymbolTable) elfReader.section(".symtab");
         
         // Now it is time to do some fun!
-        setBooleanFlag("PrintOopAddress", true);
+        setBooleanFlag("AlwaysActAsServerClassMachine", true);
+        setBooleanFlag("NeverActAsServerClassMachine", true);
+        setBooleanFlag("TraceClassLoading", true);
+        findSymbols("");
         
+        // Now let's do something so JVM get's to do funny things
+        load();
         
         System.out.println("Reached the end");
     }
@@ -45,16 +52,21 @@ public class Runner {
     }
 
     private static String findJvmMaps() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("/proc/self/maps"));
-        try {
+        try(BufferedReader reader = new BufferedReader(new FileReader("/proc/self/maps"))) {
             for (String s; (s = reader.readLine()) != null; ) {
                 if (s.endsWith("/libjvm.so")) {
                     return s;
                 }
             }
             throw new IOException("libjvm.so not found");
-        } finally {
-            reader.close();
+        }
+    }
+    
+    private static void findSymbols(String name) {
+        for (ElfSymbol symbol : symtab) {
+            if(symbol.type() == ElfSymbol.STT_OBJECT && symbol.name().toLowerCase().contains(name)) {
+                System.out.println(symbol.name());
+            }
         }
     }
 
@@ -77,5 +89,13 @@ public class Runner {
 
     public static void setBooleanFlag(String name, boolean value) throws Exception {
         setIntFlag(name, value ? 1 : 0);
+    }
+    
+    private static void load() {
+        Pattern pattern = Pattern.compile("[0-9]*-(.*)");
+        Matcher matcher = pattern.matcher("345434234-fdgfdgsdas");
+        while (matcher.find()) {
+            matcher.group(1);
+        }
     }
 }
