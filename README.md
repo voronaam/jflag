@@ -11,3 +11,11 @@ The code in this repository does not do anything of a particular interest. It se
 
 The code is based on [article](http://habrahabr.ru/company/odnoklassniki/blog/195004/) by Andrey.
 
+
+To build and run this project clone one-elf inside this project and run
+
+```
+gradle build && java -cp build/classes/main:one-elf/build/classes/main ca.vorona.jflag.Runner
+```
+
+Note that it is not made too easy to run on purpose.

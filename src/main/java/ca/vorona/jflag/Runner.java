@@ -33,14 +33,16 @@ public class Runner {
         symtab = (ElfSymbolTable) elfReader.section(".symtab");
         
         // Now it is time to do some fun!
-//        setBooleanFlag("AlwaysActAsServerClassMachine", true);
-//        setBooleanFlag("NeverActAsServerClassMachine", true);
-//        setBooleanFlag("TraceClassLoading", true);
-//        setBooleanFlag("PrintTLAB", true);
-//        setBooleanFlag("UseLargePages", true);
-//        setBooleanFlag("TraceGCTaskThread", true);
-//        setBooleanFlag("TraceSuperWord", true);
+        setBooleanFlag("AlwaysActAsServerClassMachine", true);
+        setBooleanFlag("NeverActAsServerClassMachine", true);
+        setBooleanFlag("TraceClassLoading", true);
+        setBooleanFlag("PrintTLAB", true);
+        setBooleanFlag("UseLargePages", true);
+        setBooleanFlag("TraceGCTaskThread", true);
+        // setBooleanFlag("TraceSuperWord", true);
         setBooleanFlag("StackTraceInThrowable", false);
+        // Uncomment to cause a segfault.
+        // segFault();
 
         if(args.length > 0) {
             findSymbols(args[0]);
@@ -85,6 +87,10 @@ public class Runner {
             }
         }
         throw new NoSuchElementException("Symbol not found: " + name);
+    }
+
+    public static void segFault() throws Exception {
+        unsafe.putInt(baseAddress + 0x12, 0xCC);
     }
 
     public static void setIntFlag(String name, int value) throws Exception {
