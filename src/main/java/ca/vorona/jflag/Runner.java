@@ -111,8 +111,8 @@ public class Runner {
         while (matcher.find()) {
             matcher.group(1);
         }
-        int[] a = new int[1200000000];
-        int[] b = new int[1200000000];
+        int[] a = new int[12000000];
+        int[] b = new int[12000000];
         for(int i=0;i<a.length;i+=1000) {
             a[i] = b[i];
         }
